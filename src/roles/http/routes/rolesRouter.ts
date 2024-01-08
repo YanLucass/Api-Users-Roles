@@ -10,6 +10,12 @@ const rolesRepository = new RolesRepository();
 // criar roles
 roulesRouter.post("/", (req, res) => {
    const { name } = req.body;
+   const roleAlreadyExists = rolesRepository.findByName(name);
+
+   if (roleAlreadyExists) {
+      return res.status(400).json({ error: "Role already exists" });
+   }
+
    const role = rolesRepository.create({ name });
 
    return res.status(201).json({ message: "Novo role criado", role });
