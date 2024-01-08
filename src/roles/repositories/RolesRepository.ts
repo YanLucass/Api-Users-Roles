@@ -13,7 +13,7 @@ export class RolesRepository {
       this.roles = [];
    }
 
-   create({ name }: CreateRoleDTO) {
+   create({ name }: CreateRoleDTO): Role {
       const role = new Role();
       Object.assign(role, {
          name,
@@ -22,5 +22,10 @@ export class RolesRepository {
 
       this.roles.push(role);
       return role;
+   }
+
+   //metodo para retornar as roles
+   findAll(): Role[] {
+      return this.roles;
    }
 }

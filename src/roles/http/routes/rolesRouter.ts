@@ -15,4 +15,11 @@ roulesRouter.post("/", (req, res) => {
    return res.status(201).json({ message: "Novo role criado", role });
 });
 
+//pegar roles
+
+roulesRouter.get("/", (req, res) => {
+   const roles = rolesRepository.findAll();
+   return res.json({ message: "Roles", roles });
+});
+
 export { roulesRouter };
