@@ -4,7 +4,7 @@ import { roulesRouter } from "@roles/http/routes/rolesRouter";
 const router = Router();
 
 router.get("/", (req, res) => {
-  return res.json({ message: "Hello world!" });
+   return res.json({ message: "Hello world!" });
 });
 
 //definir rotas para roles.
