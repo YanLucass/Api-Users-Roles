@@ -8,11 +8,22 @@ type CreateRoleDTO = {
 export class RolesRepository {
    private roles: Role[];
 
+   // Para o pattern Singleton
+   private static INSTANCE: RolesRepository;
+
    //definir role como array vazio assim que for instanciado
-   constructor() {
+   private constructor() {
       this.roles = [];
    }
 
+   //metodo para criar primeira instancia e garantir que seja unica
+   public static getInstance(): RolesRepository {
+      if (!this.INSTANCE) {
+         this.INSTANCE = new RolesRepository();
+      }
+      return this.INSTANCE;
+   }
+   //metodo para "mandar" a role pro BD, no caso é um array.
    create({ name }: CreateRoleDTO): Role {
       const role = new Role();
       Object.assign(role, {

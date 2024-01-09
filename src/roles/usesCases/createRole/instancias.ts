@@ -2,7 +2,7 @@ import { RolesRepository } from "@roles/repositories/RolesRepository";
 import { CreateRoleController } from "./CreateRoleController";
 import { CreateRoleUserCase } from "./CreateRoleUseCase";
 
-const rolesRepository = new RolesRepository();
+const rolesRepository = RolesRepository.getInstance();
 const createRoleUserCase = new CreateRoleUserCase(rolesRepository); //precisa do repository
 export const createRoleController = new CreateRoleController(
    createRoleUserCase,
