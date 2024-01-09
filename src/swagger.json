@@ -1,0 +1,12 @@
+{
+   "openapi": "3.0.3",
+   "info": {
+      "title": "MyApi Documentation",
+      "description": "MyAPi Documentation with all specifications",
+      "version": "1.0.0",
+      "contact": {
+         "name": "Yan",
+         "email": "yanlucascarvalho18@gmail.com"
+      }
+   }
+}

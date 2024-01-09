@@ -13,7 +13,7 @@ export class CreateRoleUserCase {
    constructor(private rolesRepository: RolesRepository) {}
 
    //metodo para criar uma role.
-   createRole({ name }: CreateRoleDTO): Role {
+   execute({ name }: CreateRoleDTO): Role {
       //verificar se a role já existe
       const roleAlreadyExists = this.rolesRepository.findByName(name);
       if (roleAlreadyExists) {
