@@ -4,6 +4,7 @@ const roulesRouter = Router();
 
 //importar instancia do controller
 import { createRoleController } from "@roles/usesCases/createRole/instancias";
+import { listRolesController } from "@roles/usesCases/listRoles/instancias";
 //simular bd
 
 // criar roles
@@ -14,8 +15,7 @@ roulesRouter.post("/", (req, res) => {
 //pegar roles
 
 roulesRouter.get("/", (req, res) => {
-   // const roles = rolesRepository.findAll();
-   // return res.json({ message: "Roles", roles });
+   return listRolesController.handle(req, res);
 });
 
 export { roulesRouter };
