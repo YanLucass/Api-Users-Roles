@@ -1,45 +1,21 @@
 import "dotenv/config";
-import express, { NextFunction, Request, Response } from "express";
-import "express-async-errors";
-import cors from "cors";
-import { router } from "./routes";
 
-//swagger
-import swaggerUi from "swagger-ui-express";
+// reflect-metadata
+import "reflect-metadata";
 
-// importar classe para tramento de erro.
-import { AppError } from "@shared/errors/AppError";
+import { app } from "./appExpress";
 
-import swaggerFile from "../../swagger.json";
-const app = express();
-app.use(cors());
+//importar instancia do DataSource para conectar ao BD quando a aplicação iniciar.
+import { dataSource } from "../typeorm/index";
 
-app.use(express.json());
-
-// Rota para documentação da API
-app.use("/docs", swaggerUi.serve, swaggerUi.setup(swaggerFile));
-
-//define routes only file (index.ts)
-app.use(router);
-
-// caso tenha ocorrido algum erro nas rotas vamos interceptar aqui.
-app.use((error: Error, req: Request, res: Response, next: NextFunction) => {
-   //caso o erro seja uma instancia de AppError vamos retornar um objeto com status e mesagem do erro;
-   if (error instanceof AppError) {
-      return res.status(error.statusCode).json({
-         status: "error",
-         message: error.message,
+dataSource
+   .initialize()
+   .then(() => {
+      // quando conectar ao bd
+      app.listen(process.env.PORT, () => {
+         console.log(`Server stard on port ${process.env.PORT}`);
       });
-   }
-
-   //erros da aplicação ex: erros interno do servidor (500)
-   console.log(error);
-   return res.status(500).json({
-      status: "error",
-      message: "Internal server error",
+   })
+   .catch(err => {
+      console.log("Erro ao se conectar ao bd", err);
    });
-});
-
-app.listen(process.env.PORT, () => {
-   console.log(`Server stard on port ${process.env.PORT}`);
-});
