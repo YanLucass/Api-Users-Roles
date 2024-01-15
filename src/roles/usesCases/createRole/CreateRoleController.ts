@@ -9,7 +9,7 @@ export class CreateRoleController {
    handle(req: Request, res: Response): Response {
       const { name } = req.body;
 
-      const role = this.createRoleUseCase.execute({ namee });
+      const role = this.createRoleUseCase.execute({ name });
       return res.status(200).json({ message: "Role created", role });
    }
 }
