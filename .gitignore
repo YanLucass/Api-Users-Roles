@@ -1,5 +1,6 @@
 /dist
 /node_modules
+/src/shared/typeorm/index.ts
 
 # Logs
 logs
@@ -43,4 +44,6 @@ tsconfig.tsbuildinfo
 uploads/*
 !uploads/.gitkeep
 # Nome do arquivo do bd
-db.sqlite 
+db.sqlite
+
+
