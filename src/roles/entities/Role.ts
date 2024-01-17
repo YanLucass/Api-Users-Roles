@@ -6,8 +6,6 @@ export class Role {
    @PrimaryColumn()
    id?: string;
 
-   naoSouPropriedadeMapeada: string;
-
    @Column()
    name: string;
 
