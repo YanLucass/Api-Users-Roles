@@ -13,9 +13,9 @@ export class CreateRoleUserCase {
    constructor(private rolesRepository: RolesRepository) {}
 
    //metodo para criar uma role.
-   execute({ name }: CreateRoleDTO): Role {
+   async execute({ name }: CreateRoleDTO): Promise<Role> {
       //verificar se a role já existe
-      const roleAlreadyExists = this.rolesRepository.findByName(name);
+      const roleAlreadyExists = await this.rolesRepository.findByName(name);
       if (roleAlreadyExists) {
          throw new AppError("Role already exists");
       }

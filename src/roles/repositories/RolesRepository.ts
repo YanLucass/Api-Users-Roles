@@ -45,7 +45,6 @@ export class RolesRepository {
    async create({ name }: CreateRoleDTO): Promise<Role> {
       const role = await this.rolesRepository.create({ name }); //está criando o objeto role com o atributo nome
       //no caso so passamos o nome, pq é so oq uma role pede, o created e id é automatico.
-      console.log(role);
       //salvar o objeto role no bd
       return this.rolesRepository.save(role);
    }
@@ -83,6 +82,9 @@ export class RolesRepository {
 
       return result;
    }
+
+   //caso o user n informe qual page quer e registro o defualt vai ser GET /roles => page = 1 limit = 15 registro
+   //Caso o usuario escolha fica GET /roles?page=5&limit=10  => retorno page=5 e limit=10
 
    //buscar por nome
    async findByName(nameRole: string): Promise<Role | null> {

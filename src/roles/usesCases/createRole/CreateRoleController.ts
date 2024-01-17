@@ -6,10 +6,10 @@ export class CreateRoleController {
    constructor(private createRoleUseCase: CreateRoleUserCase) {}
 
    // metodo para criar usuario
-   handle(req: Request, res: Response): Response {
+   async handle(req: Request, res: Response): Promise<Response> {
       const { name } = req.body;
 
-      const role = this.createRoleUseCase.execute({ name });
+      const role = await this.createRoleUseCase.execute({ name });
       return res.status(200).json({ message: "Role created", role });
    }
 }
