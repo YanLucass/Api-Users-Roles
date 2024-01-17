@@ -6,10 +6,9 @@ import "reflect-metadata";
 import { app } from "./appExpress";
 
 //importar instancia do DataSource para conectar ao BD quando a aplicação iniciar.
-import { dataSource } from "../typeorm/index";
+import { PostgresDataSource } from "../typeorm/index";
 
-dataSource
-   .initialize()
+PostgresDataSource.initialize()
    .then(() => {
       // quando conectar ao bd
       app.listen(process.env.PORT, () => {
