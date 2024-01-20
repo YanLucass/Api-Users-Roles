@@ -1,6 +1,7 @@
 import express, { NextFunction, Request, Response } from "express";
 import "express-async-errors";
 import cors from "cors";
+import { errors } from "celebrate";
 import { router } from "./routes";
 
 //swagger
@@ -20,6 +21,7 @@ app.use("/docs", swaggerUi.serve, swaggerUi.setup(swaggerFile));
 
 //define routes only file (index.ts)
 app.use(router);
+app.use(errors());
 
 // caso tenha ocorrido algum erro nas rotas vamos interceptar aqui.
 app.use((error: Error, req: Request, res: Response, next: NextFunction) => {

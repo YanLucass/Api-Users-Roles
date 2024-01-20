@@ -61,11 +61,7 @@ export class RolesRepository {
    }
 
    //buscar registro por paginação
-   async findAll({
-      page,
-      skip,
-      take,
-   }: PaginateParams): Promise<RolesPaginatesProperties> {
+   async findAll({ page, skip, take }: PaginateParams): Promise<RolesPaginatesProperties> {
       //consulta para retornar os registros.
       const [roles, count] = await this.rolesRepository
          .createQueryBuilder()
