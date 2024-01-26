@@ -13,7 +13,7 @@
    "paths": {
       "/roles": {
          "post": {
-              "tags": ["Role"],
+              "tags": ["Roles"],
               "summary": "Create a role",
               "description": "Create a new role",
               "requestBody": {
@@ -65,7 +65,7 @@
          },
 
          "get": {
-            "tags": ["Role"],
+            "tags": ["Roles"],
             "summary": "List all roles",
             "description": "Return all roles paginated.",
             "parameters": [
@@ -118,6 +118,73 @@
                         }
                      }
                   }
+               }
+            }
+         }
+      },
+
+      "/roles/{id}": {
+         "put": {
+            "tags": ["Roles"],
+            "summary": "Update a role",
+            "description": "Update a role by id",
+            "parameters": [
+               {
+                  "name": "id",
+                  "in": "path",
+                  "description": "identify of a role",
+                  "required": true,
+                  "schema": {
+                     "type": "string"
+                  },
+                  "style": "label"
+               }
+
+            ],
+            "requestBody": {
+               "content": {
+                  "application/json": {
+                     "schema": {
+                        "type": "object",
+                        "properties": {
+                            "name": {
+                              "type": "string"
+                            }
+                        },
+                        "example": "Administrator"
+                     }
+                  }
+               }
+            },
+            "responses": {
+               "200": {
+                  "description": "Success.",
+                  "content": {
+                     "application/json": {
+                        "schema": {
+                           "type": "object",
+                           "properties": {
+                              "id": {
+                                 "type": "string"
+                              },
+                               "name": {
+                                 "type": "string"
+                               },
+
+                               "created_at": {
+                                 "type": "string"
+                               }
+                           }
+                        }
+                     }
+                  }
+               },
+
+               "400": {
+                  "description": "Bad Request."
+               },
+               "404": {
+                  "description": "Role not found"
                }
             }
          }
