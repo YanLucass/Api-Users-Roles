@@ -68,9 +68,56 @@
             "tags": ["Role"],
             "summary": "List all roles",
             "description": "Return all roles paginated.",
+            "parameters": [
+               {
+                  "name": "page",
+                  "in": "query",
+                  "description": "Number of the page",
+                  "required": false,
+                  "schema": {
+                     "type": "number",
+                     "example": "page=1"
+                  },
+                  "style": "label"
+               },
+
+               {
+                  "name": "limit",
+                  "in": "query",
+                  "description": "Maximum number of records per page",
+                  "required": false,
+                  "schema": {
+                     "type": "number",
+                     "example": "limit=3"
+                  },
+                  "style": "label"
+               }
+            ],
             "responses": {
                "200": {
-                  "description": "Success."
+                  "description": "Success.",
+                  "content": {
+                     "application/json": {
+                        "example": {
+                           "per_page": 3,
+                           "total": 5,
+                           "current_page": 1,
+                           "data": [
+                              {
+                                 "id": "900d465c-9afd-404e-bccb-04f7f2004b66",
+                                 "name": "Users",
+                                 "created_at": "2024-01-20T17:42:21.701Z"
+                             },
+
+                             {
+                                 "id": "a87f01c6-60a7-4c37-aacc-6bde01ddeaf6",
+                                 "name": "Admin",
+                                 "created_at": "2024-01-25T16:21:24.495Z"
+                             }
+                           ]
+                        }
+                     }
+                  }
                }
             }
          }
