@@ -1,13 +1,13 @@
 import { Request, Response } from "express";
-
+import { container } from "tsyringe";
 import { DeleteRoleUseCase } from "./DeleteRoleUseCase";
 
 export class DeleteRoleController {
-   constructor(private DeleteRoleUseCase: DeleteRoleUseCase) {}
+   async handle(req: Request, res: Response): Promise<Response> {
+      const deleteRoleUseCase = container.resolve(DeleteRoleUseCase);
 
-   async then(req: Request, res: Response): Promise<Response> {
       const { id } = req.params;
-      await this.DeleteRoleUseCase.execute({ id });
+      await deleteRoleUseCase.execute({ id });
       return res.status(200).json({ message: "Role deleted" });
    }
 }

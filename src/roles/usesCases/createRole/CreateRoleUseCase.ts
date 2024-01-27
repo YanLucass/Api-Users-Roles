@@ -1,16 +1,18 @@
 // Definir quais prorpiedades a aplicação frontend pode mandar
 
 import { Role } from "@roles/entities/Role";
-import { RolesRepository } from "@roles/repositories/RolesRepository";
+import { IRolesRepository } from "@roles/repositories/IRolesRepository";
 import { AppError } from "@shared/errors/AppError";
+import { inject, injectable } from "tsyringe";
 
 type CreateRoleDTO = {
    name: string;
 };
 
+@injectable()
 export class CreateRoleUserCase {
-   // criar uma instancia do repository assim que instaciar createRoleUserCase
-   constructor(private rolesRepository: RolesRepository) {}
+   // Recebe o a instancia do repositorio pela injeção.
+   constructor(@inject("RolesRepository") private rolesRepository: IRolesRepository) {}
 
    //metodo para criar uma role.
    async execute({ name }: CreateRoleDTO): Promise<Role> {

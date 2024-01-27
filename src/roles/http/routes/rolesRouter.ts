@@ -77,7 +77,7 @@ roulesRouter.delete(
       }),
    }),
    (req, res) => {
-      return deleteRoleController.then(req, res);
+      return deleteRoleController.handle(req, res);
    },
 );
 

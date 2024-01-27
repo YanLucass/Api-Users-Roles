@@ -1,44 +1,19 @@
 import { Role } from "@roles/entities/Role";
 import { PostgresDataSource } from "@shared/typeorm";
 import { Repository } from "typeorm";
-// Qual tipo de informação vamos receber por parametro para criar uma Role?
-type CreateRoleDTO = {
-   name: string;
-};
+import {
+   CreateRoleDTO,
+   IRolesRepository,
+   PaginateParams,
+   RolesPaginatesProperties,
+} from "./IRolesRepository";
 
-//tipos para paganiação
-export type PaginateParams = {
-   page: number;
-   skip: number;
-   take: number;
-};
-
-//forma que os dados paginados serão retornados.
-
-export type RolesPaginatesProperties = {
-   per_page: number; // numero de registro por paginas(tamanho da pagina, qnts foram pegos)
-   total: number; //registros totais sem paginação
-   current_page: number; //numeor d apagina atual
-   data: Role[]; //dados em si retornartados.
-};
-
-export class RolesRepository {
+export class RolesRepository implements IRolesRepository {
    private rolesRepository: Repository<Role>;
 
-   // Para o pattern Singleton
-   private static INSTANCE: RolesRepository;
-
    //criar repositorio
-   private constructor() {
+   public constructor() {
       this.rolesRepository = PostgresDataSource.getRepository(Role);
-   }
-
-   //metodo para criar primeira instancia e garantir que seja unica
-   public static getInstance(): RolesRepository {
-      if (!this.INSTANCE) {
-         this.INSTANCE = new RolesRepository();
-      }
-      return this.INSTANCE;
    }
 
    //metodo paracriar role e salvar no bd
