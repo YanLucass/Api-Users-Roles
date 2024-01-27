@@ -1,16 +1,20 @@
 import { Router } from "express";
 //celebrate
 import { celebrate, Joi, Segments } from "celebrate";
+import { container } from "tsyringe";
+import { CreateRoleController } from "@roles/usesCases/createRole/CreateRoleController";
+import { ListRolesController } from "@roles/usesCases/listRoles/ListRolesController";
+import { ShowRoleController } from "@roles/usesCases/showRole/ShowRoleController";
+import { UpdateRoleController } from "@roles/usesCases/updateRole/UpdateRoleController";
+import { DeleteRoleController } from "@roles/usesCases/deleteRole/DeleteRoleController";
 
 const roulesRouter = Router();
 
-//importar instancia do controller
-import { createRoleController } from "@roles/usesCases/createRole/instancias";
-import { listRolesController } from "@roles/usesCases/listRoles/instancias";
-import { showRoleController } from "@roles/usesCases/showRole/instancias";
-import { updateController } from "@roles/usesCases/updateRole/instancias";
-import { deleteRoleController } from "@roles/usesCases/deleteRole/instancias";
-//simular bd
+const createRoleController = container.resolve(CreateRoleController);
+const listRolesController = container.resolve(ListRolesController);
+const showRoleController = container.resolve(ShowRoleController);
+const updateRoleController = container.resolve(UpdateRoleController);
+const deleteRoleController = container.resolve(DeleteRoleController);
 
 // criar roles
 roulesRouter.post(
@@ -65,7 +69,7 @@ roulesRouter.put(
       }),
    }),
    (req, res) => {
-      return updateController.handle(req, res);
+      return updateRoleController.handle(req, res);
    },
 );
 
