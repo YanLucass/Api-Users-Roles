@@ -3,7 +3,9 @@ import { DataSource } from "typeorm";
 import { CreateRolesTable1705428558994 } from "./migrations/1705428558994-CreateRolesTable";
 import { CreateUsersTable1707062283935 } from "./migrations/1707062283935-CreateUsersTable";
 import { AddRoleIdToUsersTable1707063703772 } from "./migrations/1707063703772-AddRoleIdToUsersTable";
+//entities
 import { Role } from "@roles/entities/Role";
+import { User } from "@users/entities/User";
 
 //postgres
 export const PostgresDataSource = new DataSource({
@@ -13,7 +15,7 @@ export const PostgresDataSource = new DataSource({
    username: "postgres",
    password: "180",
    database: "myapii",
-   entities: [Role],
+   entities: [Role, User],
    migrations: [
       CreateRolesTable1705428558994,
       CreateUsersTable1707062283935,
