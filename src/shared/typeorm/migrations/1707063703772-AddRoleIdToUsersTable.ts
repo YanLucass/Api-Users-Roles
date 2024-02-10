@@ -5,7 +5,7 @@ export class AddRoleIdToUsersTable1707063703772 implements MigrationInterface {
       await queryRunner.addColumn(
          "users",
          new TableColumn({
-            name: "role_id",
+            name: "roleId",
             type: "uuid",
             isNullable: true,
          }),

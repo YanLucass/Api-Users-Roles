@@ -19,6 +19,8 @@ export class UsersRepository implements IUsersRepository {
    async create({ name, email, password, isAdmin, role }: CreateUserDTO): Promise<User> {
       //create user instance
       const user = this.userRepository.create({ name, email, password, isAdmin, role });
+      console.log(user);
+
       //save in bd
       return this.userRepository.save(user);
    }

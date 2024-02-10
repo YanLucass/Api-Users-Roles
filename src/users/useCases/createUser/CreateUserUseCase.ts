@@ -28,6 +28,7 @@ export class CreateUserUseCase {
       }
       //get instance role to add to a user
       const role = await this.rolesRepository.findById(roleId);
+
       if (!role) {
          throw new AppError("Role not found", 404);
       }

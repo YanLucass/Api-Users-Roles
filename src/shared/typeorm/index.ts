@@ -1,4 +1,6 @@
 import { DataSource } from "typeorm";
+import dotenv from "dotenv";
+dotenv.config();
 //migrations
 import { CreateRolesTable1705428558994 } from "./migrations/1705428558994-CreateRolesTable";
 import { CreateUsersTable1707062283935 } from "./migrations/1707062283935-CreateUsersTable";
