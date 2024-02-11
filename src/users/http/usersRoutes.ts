@@ -3,12 +3,14 @@ import { container } from "tsyringe";
 import { celebrate, Joi, Segments } from "celebrate";
 import { CreateUserController } from "@users/useCases/createUser/CreateUserController";
 import { ListUsersController } from "@users/useCases/listUsers/ListUsersController";
+import { CreateLoginController } from "@users/useCases/createLogin/CreateLoginController";
 
 const usersRouter = Router();
 
 //controllers
 const createUserController = container.resolve(CreateUserController);
 const listUsersController = container.resolve(ListUsersController);
+const createLoginController = container.resolve(CreateLoginController);
 
 //create user
 usersRouter.post(
@@ -27,6 +29,20 @@ usersRouter.post(
    },
 );
 
+//login
+usersRouter.post(
+   "/login",
+   celebrate({
+      [Segments.BODY]: {
+         email: Joi.string().email().required(),
+         password: Joi.string().required(),
+      },
+   }),
+
+   (req, res) => {
+      return createLoginController.handle(req, res);
+   },
+);
 //list users
 usersRouter.get(
    "/",

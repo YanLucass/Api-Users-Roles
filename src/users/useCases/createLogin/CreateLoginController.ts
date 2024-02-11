@@ -9,11 +9,10 @@ export class CreateLoginController {
       const { email, password } = req.body;
       //get user and token from service
       const { user, token } = await createLoginUseCase.execute({ email, password });
-      console.log(user, token);
       return res.status(201).json(
          instanceToInstance({
-            user,
-            token,
+            user, //to remove password
+            token, //included in response because there is no @Exclude
          }),
       );
    }
