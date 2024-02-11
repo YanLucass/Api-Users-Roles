@@ -12,9 +12,11 @@ export class Role {
    @CreateDateColumn()
    created_at: Date;
 
-   constructor() {
+   constructor(name: string) {
       if (!this.id) {
          this.id = uuidv4();
       }
+
+      this.name = name;
    }
 }
