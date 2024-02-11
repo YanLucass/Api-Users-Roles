@@ -1,11 +1,14 @@
 import { Router } from "express";
-import { celebrate, Joi, Segments } from "celebrate";
 import { container } from "tsyringe";
+import { celebrate, Joi, Segments } from "celebrate";
 import { CreateUserController } from "@users/useCases/createUser/CreateUserController";
+import { ListUsersController } from "@users/useCases/listUsers/ListUsersController";
 
 const usersRouter = Router();
 
+//controllers
 const createUserController = container.resolve(CreateUserController);
+const listUsersController = container.resolve(ListUsersController);
 
 //create user
 usersRouter.post(
@@ -21,6 +24,20 @@ usersRouter.post(
    }),
    (req, res) => {
       return createUserController.handle(req, res);
+   },
+);
+
+//list users
+usersRouter.get(
+   "/",
+   celebrate({
+      [Segments.QUERY]: {
+         page: Joi.number(),
+         limit: Joi.number(),
+      },
+   }),
+   (req, res) => {
+      return listUsersController.handle(req, res);
    },
 );
 
