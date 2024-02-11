@@ -1,4 +1,5 @@
 import { Role } from "@roles/entities/Role";
+import { Exclude } from "class-transformer";
 import { Column, CreateDateColumn, Entity, ManyToOne, PrimaryColumn } from "typeorm";
 import { v4 as uuidv4 } from "uuid";
 
@@ -14,6 +15,7 @@ export class User {
    email: string;
 
    @Column()
+   @Exclude()
    password: string;
 
    @Column()

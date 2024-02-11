@@ -1,6 +1,8 @@
-import { Request, Response } from "express";
 import { container } from "tsyringe";
+import { Request, Response } from "express";
 import { CreateUserUseCase } from "./CreateUserUseCase";
+//class transformer
+import { instanceToInstance } from "class-transformer";
 
 export class CreateUserController {
    async handle(req: Request, res: Response): Promise<Response> {
@@ -10,6 +12,9 @@ export class CreateUserController {
       //create user
       const user = await createUserUseCase.execute({ name, email, password, isAdmin, roleId });
 
-      return res.status(201).json({ message: "new user created", user });
+      return res.status(201).json({
+         message: "User created",
+         user: instanceToInstance(user),
+      });
    }
 }
