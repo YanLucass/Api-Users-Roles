@@ -1,5 +1,5 @@
 import { Router } from "express";
-import { roulesRouter } from "@roles/http/routes/rolesRouter";
+import { rolesRouter } from "@roles/http/routes/rolesRouter";
 import { usersRouter } from "@users/http/usersRoutes";
 
 const router = Router();
@@ -9,7 +9,7 @@ router.get("/", (req, res) => {
 });
 
 //define routes.
-router.use("/roles", roulesRouter); //ex http://localhost/roles
+router.use("/roles", rolesRouter); //ex http://localhost/roles
 router.use("/users", usersRouter);
 
 export { router };

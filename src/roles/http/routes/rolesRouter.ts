@@ -7,8 +7,9 @@ import { ListRolesController } from "@roles/usesCases/listRoles/ListRolesControl
 import { ShowRoleController } from "@roles/usesCases/showRole/ShowRoleController";
 import { UpdateRoleController } from "@roles/usesCases/updateRole/UpdateRoleController";
 import { DeleteRoleController } from "@roles/usesCases/deleteRole/DeleteRoleController";
+import { IsAuthenticated } from "@shared/http/middlewares/IsAuthenticated";
 
-const roulesRouter = Router();
+const rolesRouter = Router();
 
 const createRoleController = container.resolve(CreateRoleController);
 const listRolesController = container.resolve(ListRolesController);
@@ -16,8 +17,11 @@ const showRoleController = container.resolve(ShowRoleController);
 const updateRoleController = container.resolve(UpdateRoleController);
 const deleteRoleController = container.resolve(DeleteRoleController);
 
-// criar roles
-roulesRouter.post(
+//check if users authenticated middleware
+rolesRouter.use(IsAuthenticated);
+
+// create role
+rolesRouter.post(
    "/",
    celebrate({
       [Segments.BODY]: Joi.object().keys({
@@ -30,7 +34,7 @@ roulesRouter.post(
 );
 
 //pegar roles
-roulesRouter.get(
+rolesRouter.get(
    "/",
    celebrate({
       [Segments.QUERY]: Joi.object().keys({
@@ -45,7 +49,7 @@ roulesRouter.get(
 
 //pegar role por id
 
-roulesRouter.get(
+rolesRouter.get(
    "/:id",
    celebrate({
       [Segments.PARAMS]: Joi.object().keys({
@@ -57,7 +61,7 @@ roulesRouter.get(
    },
 );
 
-roulesRouter.put(
+rolesRouter.put(
    "/:id",
    celebrate({
       [Segments.PARAMS]: Joi.object().keys({
@@ -73,7 +77,7 @@ roulesRouter.put(
    },
 );
 
-roulesRouter.delete(
+rolesRouter.delete(
    "/:id",
    celebrate({
       [Segments.PARAMS]: Joi.object().keys({
@@ -85,4 +89,4 @@ roulesRouter.delete(
    },
 );
 
-export { roulesRouter };
+export { rolesRouter };

@@ -4,6 +4,7 @@ import { celebrate, Joi, Segments } from "celebrate";
 import { CreateUserController } from "@users/useCases/createUser/CreateUserController";
 import { ListUsersController } from "@users/useCases/listUsers/ListUsersController";
 import { CreateLoginController } from "@users/useCases/createLogin/CreateLoginController";
+import { IsAuthenticated } from "@shared/http/middlewares/IsAuthenticated";
 
 const usersRouter = Router();
 
@@ -52,6 +53,8 @@ usersRouter.get(
          limit: Joi.number(),
       },
    }),
+
+   IsAuthenticated,
    (req, res) => {
       return listUsersController.handle(req, res);
    },
