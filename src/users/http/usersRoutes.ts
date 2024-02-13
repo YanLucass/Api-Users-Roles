@@ -16,6 +16,7 @@ const createLoginController = container.resolve(CreateLoginController);
 //create user
 usersRouter.post(
    "/",
+   IsAuthenticated,
    celebrate({
       [Segments.BODY]: {
          name: Joi.string().required(),
@@ -47,6 +48,7 @@ usersRouter.post(
 //list users
 usersRouter.get(
    "/",
+   IsAuthenticated,
    celebrate({
       [Segments.QUERY]: {
          page: Joi.number(),
@@ -54,7 +56,6 @@ usersRouter.get(
       },
    }),
 
-   IsAuthenticated,
    (req, res) => {
       return listUsersController.handle(req, res);
    },

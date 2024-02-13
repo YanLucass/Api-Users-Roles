@@ -33,7 +33,7 @@ export class CreateUsersTable1707062283935 implements MigrationInterface {
                   type: "varchar(255)",
                   isNullable: true,
                },
-
+               //mudei
                {
                   name: "isAdmin",
                   type: "boolean",

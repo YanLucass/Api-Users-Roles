@@ -1,5 +1,5 @@
 import { MigrationInterface, QueryRunner, TableColumn, TableForeignKey } from "typeorm";
-
+//mudei
 export class AddRoleIdToUsersTable1707063703772 implements MigrationInterface {
    public async up(queryRunner: QueryRunner): Promise<void> {
       await queryRunner.addColumn(
@@ -28,6 +28,6 @@ export class AddRoleIdToUsersTable1707063703772 implements MigrationInterface {
       //drop fk
       await queryRunner.dropForeignKey("users", "UserRole");
       //drop column
-      await queryRunner.dropColumn("users", "roleId");
+      await queryRunner.dropColumn("users", "roleid");
    }
 }
