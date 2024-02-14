@@ -20,6 +20,7 @@ export class UpdateAvatarUseCase {
 
    async execute({ userId, avatarFileName }: UpdateAvatarDTO): Promise<User> {
       // Check if any error occurred, for example, if the token became invalid
+
       const user = await this.usersRepository.findById(userId);
       if (!user) {
          throw new AppError("Only authenticated user can change avatar", 401);
@@ -33,7 +34,6 @@ export class UpdateAvatarUseCase {
          // Asynchronous method fs.promises.stat returns an object containing file information; if this object is returned, the file exists, and we can proceed with deletion
          try {
             const userAvatarFileExists = await fs.promises.stat(userAvatarFilePath);
-            console.log(userAvatarFileExists);
 
             // If the file exists, delete it from the path
             if (userAvatarFileExists) {
@@ -43,10 +43,10 @@ export class UpdateAvatarUseCase {
             // Log an error message if the file is not in this directory
             console.log("The file is not in this directory", error);
          }
-
-         // Set the user's new avatar and save the changes
-         user.avatar = avatarFileName;
-         return this.usersRepository.save(user);
       }
+      // Set the user's new avatar and save the changes
+      user.avatar = avatarFileName;
+
+      return this.usersRepository.save(user);
    }
 }

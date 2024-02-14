@@ -1,10 +1,18 @@
 import { Router } from "express";
 import { container } from "tsyringe";
 import { celebrate, Joi, Segments } from "celebrate";
+//multer
+import multer from "multer";
 import { CreateUserController } from "@users/useCases/createUser/CreateUserController";
 import { ListUsersController } from "@users/useCases/listUsers/ListUsersController";
 import { CreateLoginController } from "@users/useCases/createLogin/CreateLoginController";
+import { UpdateAvatarController } from "@users/useCases/updateAvatar/UpdateAvatarController";
+
+//middleware
 import { IsAuthenticated } from "@shared/http/middlewares/IsAuthenticated";
+
+//uploadConfig
+import uploadConfig from "@config/uploadImage";
 
 const usersRouter = Router();
 
@@ -12,6 +20,10 @@ const usersRouter = Router();
 const createUserController = container.resolve(CreateUserController);
 const listUsersController = container.resolve(ListUsersController);
 const createLoginController = container.resolve(CreateLoginController);
+const updateAvatarController = container.resolve(UpdateAvatarController);
+
+//multer middleware
+const upload = multer(uploadConfig);
 
 //create user
 usersRouter.post(
@@ -59,6 +71,15 @@ usersRouter.get(
    (req, res) => {
       return listUsersController.handle(req, res);
    },
-);
+),
+   usersRouter.patch(
+      "/avatar",
+      IsAuthenticated,
+      upload.single("avatar"), //um arquivo recebido do campo avatar
+
+      (req, res) => {
+         return updateAvatarController.handle(req, res);
+      },
+   );
 
 export { usersRouter };
