@@ -285,6 +285,118 @@
                }
             }
          }
+      },
+
+      "/users": {
+         "post":  {
+            "tags": ["Users"],
+            "summary": "Create a user",
+            "description": "Create a new user with name, email, password, isAdmin, roleId",
+            "requestBody": {
+               "content": {
+                  "application/json": {
+                     "schema": {
+                        "type": "object",
+                        "properties": {
+                           "name": {
+                              "type": "string"
+                           },
+
+                           "email": {
+                              "type": "string"
+                           },
+
+                           "password": {
+                              "type": "string"
+                           },
+
+                           "isAdmin": {
+                              "type": "boolean"
+                           },
+
+                           "roleId": {
+                              "type": "string"
+                           }
+                        }
+                     }
+                  }
+               }
+            },
+
+            "responses": {
+               "201": {
+                  "description": "User created",
+                  "content": {
+                     "application/json": {
+                        "schema": {
+                           "type": "object",
+                           "properties": {
+                              "message": {
+                                 "type": "string"
+                              },
+
+                              "id": {
+                                 "type": "string"
+                              },
+
+                              "name": {
+                                 "type": "string"
+                              },
+
+                              "email": {
+                                 "type": "string"
+                              },
+
+                              "password": {
+                                 "type": "string"
+                              },
+
+                              "isAdmin": {
+                                 "type": "boolean"
+                              },
+
+                              "roleId": {
+                                 "type": "string"
+                              },
+
+                              "created_at": {
+                                 "type": "string"
+                              }
+                           },
+
+                           "example": {
+                              "message": "User created",
+                              "user": {
+                                  "id": "b96b7746-ae90-413e-9829-bf909f355fa7",
+                                  "name": "Igor",
+                                  "email": "igor@gmail.com",
+                                  "isAdmin": true,
+                                  "role": {
+                                      "id": "c8be778c-3e8a-4fec-96cf-22ce6cc53e11",
+                                      "name": "admin",
+                                      "created_at": "2024-02-13T20:41:55.498Z"
+                                  },
+                                  "created_at": "2024-02-14T13:22:03.766Z"
+                              }
+                           }
+                        }
+                     }
+                  }
+               },
+
+               "400": {
+                  "description": "Email address already used."
+               },
+
+               "401": {
+                  "description": "Invalid authentication token"
+               },
+
+               "404": {
+                  "description": "Role not found"
+               }
+            }
+         }
       }
    }
 }
