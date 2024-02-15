@@ -1,15 +1,15 @@
 ### Api-Users-Roles
-#Esta API é desenvolvida para gerenciar usuários e suas funções, utilizando Node.js, TypeScript, PostgreSQL e várias bibliotecas populares.
+Esta API é desenvolvida para gerenciar usuários e suas funções, utilizando Node.js, TypeScript, PostgreSQL e várias bibliotecas populares.
 
-###Clonando o repositorio 
+###Clonando o repositorio:
 git clone https://github.com/YanLucass/Api-Users-Roles
 
-### Instalando depêndencias 
+### Instalando depêndencias:
 cd Api-Users-Roles
 npm i 
 
 
-## Configuração do Banco de Dados
+## Configurar banco de dados:
 
 1. Crie um banco de dados PostgreSQL para a aplicação.
 2. Copie o conteúdo do arquivo `.env.example` para um novo arquivo chamado `.env`.
@@ -27,7 +27,7 @@ npm i
    JWT_SECRET=
    JWT_EXPIRES_IN=
 
-### Rodar projeto
+### Rodar projeto:
 
 Criar tabelas: npm run typeorm -- -d  ./src/shared/typeorm/index.ts migration:run
 Criar usuário padrão: npm run seed:admin
