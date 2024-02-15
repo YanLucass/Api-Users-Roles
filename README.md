@@ -27,6 +27,7 @@ npm i
    JWT_SECRET=
    JWT_EXPIRES_IN=
 
+Caso queira trabalhar com algum outro banco de dados, consulte: https://typeorm.io/data-source
 ### Rodar projeto:
 
 Criar tabelas: npm run typeorm -- -d  ./src/shared/typeorm/index.ts migration:run
