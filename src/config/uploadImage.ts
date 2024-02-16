@@ -1,6 +1,7 @@
 import path from "node:path";
 import crypto from "node:crypto";
 import multer, { StorageEngine } from "multer";
+import { AppError } from "@shared/errors/AppError";
 
 // Make it easier to know what is inside the object
 type UploadConfig = {
@@ -10,6 +11,16 @@ type UploadConfig = {
 
 // Resolve the upload folder path
 const uploadFolder = path.resolve(__dirname, "..", "..", "uploads");
+
+//validate the file type.
+const fileFilter = (req, file, callback) => {
+   const allowMimes = ["image/jpeg", "image/png", "image/jpg"];
+   if (allowMimes.includes(file.mimetype)) {
+      callback(null, true);
+   } else {
+      callback(new AppError("Tipo de arquivo inválido. Apenas JPEG, JPG E PNG são permitidos!"));
+   }
+};
 
 // Export the upload configuration object
 export default {
@@ -29,4 +40,6 @@ export default {
          callback(null, fileName);
       },
    }),
+
+   fileFilter: fileFilter,
 } as UploadConfig;
