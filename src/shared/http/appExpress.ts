@@ -3,7 +3,8 @@ import "express-async-errors";
 import cors from "cors";
 import { errors } from "celebrate";
 import { router } from "./routes";
-
+import path from "node:path";
+import uploadConfig from "@config/uploadImage";
 //swagger
 import swaggerUi from "swagger-ui-express";
 
@@ -18,7 +19,9 @@ app.use(cors());
 
 app.use(express.json());
 
-// Rota para documentação da API
+//Static router to serve the users images
+app.use("/files", express.static(uploadConfig.directory));
+// Static router to documentation
 app.use("/docs", swaggerUi.serve, swaggerUi.setup(swaggerFile));
 
 //define routes only file (index.ts)
