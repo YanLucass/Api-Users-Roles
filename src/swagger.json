@@ -58,6 +58,10 @@
 
                   "400": {
                      "description": "Role already exists"
+                  },
+
+                  "401": {
+                     "description": "Invalid authentication token"
                   }
               }
 
@@ -118,6 +122,10 @@
                         }
                      }
                   }
+               },
+
+               "401": {
+                  "description": "Invalid authentication token"
                }
             }
          }
@@ -192,6 +200,11 @@
                "400": {
                   "description": "Bad Request."
                },
+
+               "401": {
+                  "description": "Invalid authentication token"
+               },
+
                "404": {
                   "description": "Role not found"
                }
@@ -248,6 +261,11 @@
                "400": {
                   "description": "Bad Request."
                },
+
+               "401": {
+                  "description": "Invalid authentication token"
+               },
+
                "404": {
                   "description": "Role not found"
                }
@@ -280,6 +298,11 @@
                "400": {
                   "description": "Bad Request."
                },
+
+               "401": {
+                  "description": "Invalid authentication token"
+               },
+
                "404": {
                   "description": "Role not found"
                }
@@ -288,6 +311,7 @@
       },
 
       "/users": {
+
          "post":  {
             "tags": ["Users"],
             "summary": "Create a user",
@@ -397,7 +421,121 @@
                }
             }
          },
+         "get": {
+            "tags": ["Users"],
+            "summary": "List all users",
+            "description": "Return all users paginated",
+            "parameters": [
+               {
+                  "name": "page",
+                  "in": "query",
+                  "description": "Number of the page",
+                  "required": false,
+                  "schema": {
+                     "type": "number",
+                     "example": "page=1"
+                  },
 
+                  "style": "label"
+
+               },
+
+               {
+                  "name": "limit",
+                  "in": "query",
+                  "description": "Number of registers per page",
+                  "required": false,
+                  "schema": {
+                     "type": "number",
+                     "example": "limit=2"
+                  },
+
+                  "style": "label"
+
+               }
+            ],
+
+            "responses": {
+               "200": {
+                  "description": "Success.",
+                  "content": {
+                     "application/json": {
+                        "example": {
+                           "message": "All user created:",
+                           "users": {
+                           "per_page": 3,
+                           "total": 3,
+                           "current_page": 1,
+                           "data": [
+
+                           {
+                              "id": "9953b097-4e08-440c-a1a1-dd798ba06713",
+                              "name": "admin",
+                              "email": "a@a.com",
+                              "avatar": null,
+                              "isAdmin": true,
+                              "created_at": "2024-02-13T20:43:04.945Z",
+                              "role": {
+                              "id": "80f6e289-a016-4545-b5dd-d46be7fe6cf6",
+                              "name": "TI",
+                              "created_at": "2024-02-13T20:43:04.874Z"
+                           },
+
+                           "avatar_url": null
+
+                           },
+
+                           {
+                              "id": "b96b7746-ae90-413e-9829-bf909f355fa7",
+                              "name": "Igor",
+                              "email": "igor@gmail.com",
+                              "avatar": null,
+                              "isAdmin": true,
+                              "created_at": "2024-02-14T13:22:03.766Z",
+                              "role": {
+                                  "id": "c8be778c-3e8a-4fec-96cf-22ce6cc53e11",
+                                  "name": "admin",
+                                  "created_at": "2024-02-13T20:41:55.498Z"
+                              },
+
+                              "avatar_url": null
+                          },
+
+                          {
+                           "id": "b96b7746-ae90-413e-9829-bf909f355fa7",
+                           "name": "Thiago",
+                           "email": "thiago@gmail.com",
+                           "avatar": "d7bf4bb39e7157391847",
+                           "isAdmin": true,
+                           "created_at": "2024-02-14T13:22:03.766Z",
+                           "role": {
+                               "id": "c8be778c-3e8a-4fec-96cf-22ce6cc53e11",
+                               "name": "admin",
+                               "created_at": "2024-02-13T20:41:55.498Z"
+                           },
+
+                           "avatar_url": "http://localhost:5000/files/d7bf4bb39e7157391847_ docs.png"
+                       }
+
+                        ]
+                        }
+                     }
+                  }
+               }
+            },
+
+            "400": {
+               "description": "Bad Request."
+            },
+
+            "401": {
+               "description": "Invalid authentication token"
+            }
+         }
+         }
+      },
+
+      "/users/showProfile": {
          "get": {
             "tags": ["Users"],
             "summary": "Show user profile by id",
@@ -467,10 +605,200 @@
                "404": {
                   "description": "User not found"
                }
+         }
+      }
+      },
 
+      "/users/avatar": {
+         "patch": {
+            "tags": ["Users"],
+            "summary": "Update avatar image",
+            "requestBody": {
+               "content": {
+                  "multipart/form-data": {
+                     "schema:": {
+                        "type": "object",
+                        "properties": {
+                           "file": {
+                              "type": "string",
+                              "format": "binary"
+                           }
+                        }
+                     }
+                  }
+               }
+            },
+
+            "responses": {
+               "200": {
+                  "description": "Success.",
+                  "content": {
+                     "application/json": {
+                        "schema": {
+                           "type": "string",
+                           "properties": {
+                              "id": {
+                                 "type": "string"
+                               },
+                               "name": {
+                                 "type": "string"
+                               },
+                               "email": {
+                                 "type": "string"
+                               },
+                               "isAdmin": {
+                                 "type": "boolean"
+                               },
+                               "avatar": {
+                                 "type": "string"
+                               },
+                               "avatar_url": {
+                                 "type": "string"
+                               },
+                               "created_at": {
+                                 "type": "datetime"
+                               }
+                           },
+
+                           "example": {
+                              "id": "f20b528a-6b87-420a-896d-c9b207734512",
+                              "name": "Yan",
+                              "email": "yan@gmail.com",
+                              "avatar": "d7bf4bb39e7157391847_ docs.png",
+                              "isAdmin": true,
+                              "created_at": "2024-02-16T17:12:24.749Z",
+                              "avatar_url": "http://localhost:5000/files/d7bf4bb39e7157391847_ docs.png"
+                           }
+                        }
+                     }
+                  }
+               },
+               "400": {
+                  "description": "Bad request."
+                },
+                "401": {
+                  "description": "Invalid authentication token."
+                },
+                "404": {
+                  "description": "User not found."
+                }
             }
+         }
+      },
+
+      "/users/updateProfile": {
+         "put": {
+            "tags": ["Users"],
+            "summary": "Update user data",
+            "description": "Update email, password, name from user",
+            "requestBody": {
+               "content": {
+                  "application/json": {
+                     "schema": {
+                        "type": "object",
+                        "properties": {
+                           "name": {
+                              "type": "string"
+                           },
+
+                           "email": {
+                              "type": "string"
+                           },
+
+                           "oldPassword": {
+                              "type": "string"
+                           },
+
+                           "password": {
+                              "type": "string"
+                           },
+
+                           "confirmNewPassword": {
+                              "type": "string"
+                           }
+
+                        },
+
+                        "example": {
+                           "name": "Yan",
+                           "email": "yan@gmail.com",
+                           "oldPassword": "1234",
+                           "password": "12345yan",
+                           "confirmNewPassword": "12345yan"
+                        }
+                     }
+                  }
+               }
+            },
+
+            "responses": {
+               "200": {
+                  "description": "Success.",
+                  "content": {
+                     "application/json": {
+                        "schema": {
+                           "type": "object",
+                           "properties": {
+                              "id": {
+                                 "type": "string"
+                              },
+
+                              "name": {
+                                 "type": "string"
+                              },
+
+                              "email": {
+                                 "type": "string"
+                               },
+
+                               "isAdmin": {
+                                 "type": "boolean"
+                               },
+
+                               "avatar": {
+                                 "type": "string"
+                               },
+
+                               "avatar_url": {
+                                 "type": "string"
+                               },
+
+                               "created_at": {
+                                 "type": "datetime"
+                               }
+
+                           },
+
+                           "example": {
+                              "id": "f20b528a-6b87-420a-896d-c9b207734512",
+                              "name": "Yan",
+                              "email": "yan@gmail.com",
+                              "avatar": "d7bf4bb39e7157391847_ docs.png",
+                              "isAdmin": true,
+                              "created_at": "2024-02-16T17:12:24.749Z",
+                              "avatar_url": "http://localhost:5000/files/d7bf4bb39e7157391847_docs.png"
+                           }
+                        }
+                     }
+                  }
+               },
+
+               "400": {
+                  "description": "Bad Request. Old password is required. Old password does not match. There is already one user with this email"
+               },
+
+               "401": {
+                  "description": "Invalid authentication token."
+               },
+
+               "404": {
+                  "description": "User not found"
+               }
+            }
+
 
          }
       }
-   }
 }
+}
+
