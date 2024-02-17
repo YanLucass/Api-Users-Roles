@@ -26,6 +26,8 @@ npm i
 
    JWT_SECRET=
    JWT_EXPIRES_IN=
+   API_URL=
+   AVATARES_URL=
 
 Caso queira trabalhar com algum outro banco de dados, consulte: https://typeorm.io/data-source
 ### Rodar projeto:
