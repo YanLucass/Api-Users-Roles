@@ -90,14 +90,20 @@ usersRouter.get(
    ),
    usersRouter.put(
       "/updateProfile",
-      IsAuthenticated,
+      IsAuthenticated, // Middleware to ensure user is authenticated
       celebrate({
          [Segments.BODY]: {
             name: Joi.string().required(),
             email: Joi.string().email().required(),
-            oldPassword: Joi.string(),
-            password: Joi.string(),
-            confirmNewPassword: Joi.string(),
+            oldPassword: Joi.string(), // Old password (if changing password)
+            password: Joi.string().optional(), // New password is optional
+            confirmNewPassword: Joi.string()
+               // If password is provided, make confirmNewPassword required
+               .valid(Joi.ref("password")) // Reference to validate against the password field
+               .when("password", {
+                  is: Joi.exist(), // If password field exists
+                  then: Joi.required(), // ConfirmNewPassword is required now
+               }),
          },
       }),
       (req, res) => {

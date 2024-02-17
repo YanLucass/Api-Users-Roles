@@ -22,7 +22,6 @@ export class UpdateUserProfileUseCase {
       name,
       email,
       password,
-      confirmNewPassword,
       oldPassword,
    }: UpdateUserProfileDTO): Promise<User> {
       // Check if user exists
@@ -38,17 +37,12 @@ export class UpdateUserProfileUseCase {
       }
 
       // If the user wants to change the password
-      if (oldPassword && password && confirmNewPassword) {
+      if (oldPassword && password) {
          // Check if the old password provided matches the user's password
 
          const checkOldPassword = await compare(oldPassword, user.password);
          if (!checkOldPassword) {
             throw new AppError("Old password does not match", 401);
-         }
-
-         // Check if the new password and confirmation match
-         if (password !== confirmNewPassword) {
-            throw new AppError("Password and confirm need to be equal", 422);
          }
 
          // If all checks pass, update the password
