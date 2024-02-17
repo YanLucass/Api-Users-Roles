@@ -8,6 +8,7 @@ import { ListUsersController } from "@users/useCases/listUsers/ListUsersControll
 import { CreateLoginController } from "@users/useCases/createLogin/CreateLoginController";
 import { UpdateAvatarController } from "@users/useCases/updateAvatar/UpdateAvatarController";
 import { ShowUserProfileController } from "@users/useCases/showProfile/ShowUserProfileController";
+import { UpdateUserProfileController } from "@users/useCases/updateUserProfile/UpdateUserProfileController";
 
 //middleware
 import { IsAuthenticated } from "@shared/http/middlewares/IsAuthenticated";
@@ -23,16 +24,15 @@ const listUsersController = container.resolve(ListUsersController);
 const createLoginController = container.resolve(CreateLoginController);
 const updateAvatarController = container.resolve(UpdateAvatarController);
 const showUserProfileController = container.resolve(ShowUserProfileController);
+const updateUserProfileController = container.resolve(UpdateUserProfileController);
 
 //multer middleware
 const upload = multer(uploadConfig);
 
-//isAuthenticated middleware
-usersRouter.use(IsAuthenticated);
-
 //create user
 usersRouter.post(
    "/",
+   IsAuthenticated,
    celebrate({
       [Segments.BODY]: {
          name: Joi.string().required(),
@@ -64,6 +64,7 @@ usersRouter.post(
 //list users
 usersRouter.get(
    "/",
+   IsAuthenticated,
    celebrate({
       [Segments.QUERY]: {
          page: Joi.number(),
@@ -75,15 +76,32 @@ usersRouter.get(
       return listUsersController.handle(req, res);
    },
 ),
-   usersRouter.get("/showUserProfile", (req, res) => {
+   usersRouter.get("/showUserProfile", IsAuthenticated, (req, res) => {
       return showUserProfileController.handle(req, res);
    }),
    usersRouter.patch(
       "/avatar",
+      IsAuthenticated,
       upload.single("avatar"), //um arquivo recebido do campo avatar
 
       (req, res) => {
          return updateAvatarController.handle(req, res);
+      },
+   ),
+   usersRouter.put(
+      "/updateProfile",
+      IsAuthenticated,
+      celebrate({
+         [Segments.BODY]: {
+            name: Joi.string().required(),
+            email: Joi.string().email().required(),
+            oldPassword: Joi.string(),
+            password: Joi.string(),
+            confirmNewPassword: Joi.string(),
+         },
+      }),
+      (req, res) => {
+         return updateUserProfileController.handle(req, res);
       },
    );
 
