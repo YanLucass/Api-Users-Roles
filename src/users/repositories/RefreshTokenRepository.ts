@@ -18,8 +18,6 @@ export class RefreshTokenRepository implements IRefreshTokenRepository {
          expires,
          valid,
       });
-
-      console.log(refreshToken);
       return this.refreshTokenRepository.save(refreshToken);
    }
 

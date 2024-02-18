@@ -7,7 +7,15 @@ import { CreateLoginController } from "@users/useCases/createLogin/CreateLoginCo
 import { UpdateAvatarController } from "@users/useCases/updateAvatar/UpdateAvatarController";
 import { ShowUserProfileController } from "@users/useCases/showProfile/ShowUserProfileController";
 import { UpdateUserProfileController } from "@users/useCases/updateUserProfile/UpdateUserProfileController";
+import { IRefreshTokenRepository } from "@users/repositories/IRefreshTokenRepository";
+import { RefreshTokenRepository } from "@users/repositories/RefreshTokenRepository";
+//repositories
 container.registerSingleton<IUsersRepository>("UsersRepository", UsersRepository);
+container.registerSingleton<IRefreshTokenRepository>(
+   "RefreshTokenRepository",
+   RefreshTokenRepository,
+);
+
 //controllers
 container.registerSingleton("CreateUserController", CreateUserController);
 container.registerSingleton("ListUserController", ListUsersController);

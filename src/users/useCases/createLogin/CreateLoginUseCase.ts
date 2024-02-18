@@ -5,6 +5,8 @@ import { User } from "@users/entities/User";
 import { IUsersRepository } from "@users/repositories/IUsersRepository";
 //helper
 import { createToken } from "src/helpers/create-user-token";
+import { IRefreshTokenRepository } from "@users/repositories/IRefreshTokenRepository";
+import { createRefreshToken } from "src/helpers/create-refresh-token";
 
 type CreateLoginDTO = {
    email: string;
@@ -14,12 +16,16 @@ type CreateLoginDTO = {
 //type from controller response
 type IResponse = {
    user: User;
-   token: string;
+   accessToken: string;
+   refreshToken: string;
 };
 
 @injectable()
 export class CreateLoginUseCase {
-   constructor(@inject("UsersRepository") private usersRepository: IUsersRepository) {}
+   constructor(
+      @inject("UsersRepository") private usersRepository: IUsersRepository,
+      @inject("RefreshTokenRepository") private refreshTokenRepository: IRefreshTokenRepository,
+   ) {}
 
    async execute({ email, password }: CreateLoginDTO): Promise<IResponse> {
       //check if email exists
@@ -34,12 +40,23 @@ export class CreateLoginUseCase {
          throw new AppError("Incorrect email/password combination", 401);
       }
 
-      //create token
-      const token = createToken(user);
+      //create acceess token
+      const accessToken = createToken(user);
+
+      //create refresh token
+      const { refreshToken, expires } = createRefreshToken(user);
+
+      await this.refreshTokenRepository.create({
+         token: refreshToken,
+         expires,
+         user_id: user.id,
+         valid: true,
+      });
 
       return {
          user,
-         token,
+         accessToken,
+         refreshToken,
       };
    }
 }

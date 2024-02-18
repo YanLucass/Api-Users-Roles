@@ -18,7 +18,7 @@ export class CreateRefreshTokensTable1708269437898 implements MigrationInterface
 
                {
                   name: "token",
-                  type: "varchar(60)",
+                  type: "varchar(255)",
                   isUnique: true,
                },
 
