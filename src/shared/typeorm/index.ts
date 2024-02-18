@@ -10,6 +10,7 @@ import { AddRoleIdToUsersTable1707063703772 } from "./migrations/1707063703772-A
 import { Role } from "@roles/entities/Role";
 import { User } from "@users/entities/User";
 import { CreateRefreshTokensTable1708269437898 } from "./migrations/1708269437898-CreateRefreshTokensTable";
+import { RefreshToken } from "@users/entities/RefreshToken";
 
 //postgres
 export const PostgresDataSource = new DataSource({
@@ -19,7 +20,7 @@ export const PostgresDataSource = new DataSource({
    username: process.env.DB_USERNAME,
    password: process.env.DB_PASSWORD,
    database: process.env.DB_DATABASE,
-   entities: [Role, User],
+   entities: [Role, User, RefreshToken],
    migrations: [
       CreateRolesTable1705428558994,
       CreateUsersTable1707062283935,
