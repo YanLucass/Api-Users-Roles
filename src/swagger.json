@@ -535,6 +535,203 @@
          }
       },
 
+      "/users/login": {
+         "post": {
+            "tags": ["Users"],
+            "summary": "Login",
+            "requestBody": {
+               "content": {
+                  "application/json": {
+                     "schema": {
+                        "type": "object",
+                        "properties": {
+                           "email": {
+                              "type": "string"
+                           },
+
+                           "password": {
+                              "type": "string"
+                           }
+                        },
+
+                        "example": {
+                           "email": "ad@a.com",
+                           "password": "1234"
+                        }
+                     }
+                  }
+               }
+            },
+
+            "responses": {
+               "200": {
+                  "description": "Success.",
+                  "content": {
+                     "application/json": {
+                        "schema": {
+                           "type": "object",
+                           "properties": {
+                              "user": {
+                                 "type": "object",
+                                 "properties": {
+                                    "id": {
+                                       "type": "string"
+                                     },
+                                     "name": {
+                                       "type": "string"
+                                     },
+                                     "email": {
+                                       "type": "string"
+                                     },
+                                     "isAdmin": {
+                                       "type": "boolean"
+                                     },
+                                     "avatar": {
+                                       "type": "string"
+                                     },
+                                     "avatar_url": {
+                                       "type": "string"
+                                     },
+                                     "created_at": {
+                                       "type": "datetime"
+                                     }
+                                 }
+                              },
+
+                              "accessToken": {
+                                 "type": "string"
+                              },
+
+                              "refreshToken": {
+                                 "type": "string"
+                              }
+                           },
+
+                           "example": {
+                              "user": {
+                                 "id": "1916755f-9f6c-4284-b98d-0d944bbc499e",
+                                 "name": "admfin",
+                                 "email": "ad@a.com",
+                                 "avatar": null,
+                                 "isAdmin": true,
+                                 "created_at": "2024-02-18T19:49:32.845Z",
+                                 "avatar_url": null
+                             },
+                                 "accessToken": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpYXQiOjE3MDg0Mzk4NDMsImV4cCI6MTcwODQzOTg1Mywic3ViIjoiMTkxNjc1NWYtOWY2Yy00Mjg0LWI5OGQtMGQ5NDRiYmM0OTllIn0.xXHy3_DgvBbxaLZWA8wNyzSlczxWNBur0ZN3W-wwwIk",
+                                 "refreshToken": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpYXQiOjE3MDg0Mzk4NDMsImV4cCI6MTcwODQ0MDQ0Mywic3ViIjoiMTkxNjc1NWYtOWY2Yy00Mjg0LWI5OGQtMGQ5NDRiYmM0OTllIn0.iwbC9qi2tBC-zLKlQZYfwM8bZxr-20nfD2gOB0RpnE4"
+                              }
+                           }
+                        }
+                     }
+                  },
+
+                  "400": {
+                     "description": "Bad request."
+                  },
+
+                  "401": {
+                     "description": "Incorrect email/password combination."
+                  }
+               }
+            }
+      },
+
+      "/users/refresh_token": {
+         "post": {
+            "tags": ["Users"],
+            "summary": "Create refreshToken and access token router.",
+            "requestBody": {
+               "content": {
+                  "application/json": {
+                     "schema": {
+                        "type": "object",
+                        "properties": {
+                          "refresh_token": {
+                           "type": "string"
+                          }
+                        },
+
+                        "example": {
+                           "refresh_token": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpYXQiOjE3MDg0NDgzOTUsImV4cCI6MTcwODQ0ODk5NSwic3ViIjoiMTkxNjc1NWYtOWY2Yy00Mjg0LWI5OGQtMGQ5NDRiYmM0OTllIn0.oU8F-WkHYEWy93GxR6gcwAZM_uV1srinlQfD2lTE488"
+                        }
+                     }
+                  }
+               }
+            },
+
+            "responses": {
+               "200": {
+                  "description": "Success.",
+                  "content": {
+                     "application/json": {
+                        "schema": {
+                           "type": "object",
+                           "properties": {
+                              "user": {
+                                 "type": "object",
+                                 "properties": {
+                                    "id": {
+                                       "type": "string"
+                                     },
+                                     "name": {
+                                       "type": "string"
+                                     },
+                                     "email": {
+                                       "type": "string"
+                                     },
+                                     "isAdmin": {
+                                       "type": "boolean"
+                                     },
+                                     "avatar": {
+                                       "type": "string"
+                                     },
+                                     "avatar_url": {
+                                       "type": "string"
+                                     },
+                                     "created_at": {
+                                       "type": "datetime"
+                                     }
+                                 }
+                              },
+
+                              "accessToken": {
+                                 "type": "string"
+                              },
+
+                              "refreshToken": {
+                                 "type": "string"
+                              }
+                           },
+
+                           "example": {
+                              "user": {
+                                 "id": "1916755f-9f6c-4284-b98d-0d944bbc499e",
+                                 "name": "admfin",
+                                 "email": "ad@a.com",
+                                 "avatar": null,
+                                 "isAdmin": true,
+                                 "created_at": "2024-02-18T19:49:32.845Z",
+                                 "avatar_url": null
+                             },
+                                 "accessToken": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpYXQiOjE3MDg0NDg0MTgsImV4cCI6MTcwODQ0ODQyOCwic3ViIjoiMTkxNjc1NWYtOWY2Yy00Mjg0LWI5OGQtMGQ5NDRiYmM0OTllIn0.efL_suZmnJb8kcZN9rAFYjtj5pETGdsUOV6d3eBAzug",
+                                 "refreshToken": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpYXQiOjE3MDg0NDg0MTgsImV4cCI6MTcwODQ0OTAxOCwic3ViIjoiMTkxNjc1NWYtOWY2Yy00Mjg0LWI5OGQtMGQ5NDRiYmM0OTllIn0.7ke3_Lpa7Ll1WBbYUmA58y8XzsKeHZ0WlQX59NVgGf8"
+                              }
+                           }
+                        }
+                     }
+                  },
+
+                  "400": {
+                     "description": "Bad request."
+                  },
+
+                  "401": {
+                     "description": "Refresh token is required."
+                  }
+               }
+            }
+      },
+
       "/users/showProfile": {
          "get": {
             "tags": ["Users"],
@@ -799,6 +996,6 @@
 
          }
       }
-}
+   }
 }
 

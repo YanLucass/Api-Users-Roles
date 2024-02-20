@@ -94,7 +94,8 @@ usersRouter.get(
       return listUsersController.handle(req, res);
    },
 ),
-   usersRouter.get("/showUserProfile", IsAuthenticated, (req, res) => {
+   //MUDAR
+   usersRouter.get("/profile", IsAuthenticated, (req, res) => {
       return showUserProfileController.handle(req, res);
    }),
    usersRouter.patch(

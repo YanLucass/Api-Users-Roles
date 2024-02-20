@@ -39,7 +39,7 @@ export const IsAuthenticated = async (req: Request, res: Response, next: NextFun
    } catch (error) {
       return res.status(401).json({
          error: true,
-         code: "token.expires", //used by the frontend to request new token
+         code: "token.expired", //used by the frontend to request new token
          message: "Access token not present",
       });
    }
