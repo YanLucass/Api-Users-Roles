@@ -9,12 +9,14 @@ import { CreateLoginController } from "@users/useCases/createLogin/CreateLoginCo
 import { UpdateAvatarController } from "@users/useCases/updateAvatar/UpdateAvatarController";
 import { ShowUserProfileController } from "@users/useCases/showProfile/ShowUserProfileController";
 import { UpdateUserProfileController } from "@users/useCases/updateUserProfile/UpdateUserProfileController";
+import { CreateAccessAndRefreshTokenController } from "@users/useCases/createAccessAndRefreshToken/CreateAccessAndRefreshTokenController";
 
 //middleware
 import { IsAuthenticated } from "@shared/http/middlewares/IsAuthenticated";
 
 //uploadConfig
 import uploadConfig from "@config/uploadImage";
+import { addUserInfoToRequest } from "./middlewares/addUserInfoToRequest";
 
 const usersRouter = Router();
 
@@ -25,6 +27,9 @@ const createLoginController = container.resolve(CreateLoginController);
 const updateAvatarController = container.resolve(UpdateAvatarController);
 const showUserProfileController = container.resolve(ShowUserProfileController);
 const updateUserProfileController = container.resolve(UpdateUserProfileController);
+const createAccessAndRefreshTokenController = container.resolve(
+   CreateAccessAndRefreshTokenController,
+);
 
 //multer middleware
 const upload = multer(uploadConfig);
@@ -60,7 +65,20 @@ usersRouter.post(
    (req, res) => {
       return createLoginController.handle(req, res);
    },
-);
+),
+   //create access token and refresh_token
+   usersRouter.post(
+      "/refresh_token",
+      addUserInfoToRequest,
+      celebrate({
+         [Segments.BODY]: {
+            refresh_token: Joi.string().required(),
+         },
+      }),
+      (req, res) => {
+         return createAccessAndRefreshTokenController.handle(req, res);
+      },
+   );
 //list users
 usersRouter.get(
    "/",
