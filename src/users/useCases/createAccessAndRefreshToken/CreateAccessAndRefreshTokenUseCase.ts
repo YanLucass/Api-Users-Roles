@@ -36,14 +36,13 @@ export class CreateAccessAndRefreshTokenUseCase {
 
       // Get refresh token
       const refreshTokenExists = await this.refreshTokenRepository.findByToken(refresh_token);
-      console.log(refreshTokenExists);
+
       if (!refreshTokenExists) {
          throw new AppError("Refresh token is required", 401);
       }
 
       // Check if refresh token is valid or has time remaining
       const dateNow = new Date().getTime();
-      console.log(dateNow);
 
       if (!refreshTokenExists.valid || refreshTokenExists.expires.getTime() < dateNow) {
          throw new AppError("Refresh token is invalid/expired", 401);
